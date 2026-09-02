@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SYS_SENDER // WebRTC</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <h1>LOCAL SCREEN SHARING</h1>
+
+    <div class="panel">
+        <p><strong>[ STATUS ]</strong> <span id="status">Ready</span></p>
+        <p><strong>[ LAPTOP_IP ]</strong> <span id="laptop-ip">Detecting...</span></p>
+        <p><strong>[ RECEIVER_URL ]</strong> <a href="#" id="receiver-url" target="_blank">Detecting...</a></p>
+        <p><strong>[ ACTIVE_LINKS ]</strong> <span id="device-count">0</span></p>
+    </div>
+
+    <!-- User-configurable video settings for resolution and frame rate -->
+    <div class="panel" style="margin-bottom: 20px;">
+        <p><strong>[ UPLINK_CONFIGURATION ]</strong></p>
+        <label for="resolution-select" style="margin-right: 10px;">Resolution:</label>
+        <select id="resolution-select"
+            style="background: var(--bg-color); color: var(--neon-cyan); border: 1px solid var(--neon-cyan); padding: 5px; margin-right: 20px;">
+            <option value="auto">Automatic</option>
+            <option value="360">360p</option>
+            <option value="480">480p</option>
+            <option value="720" selected>720p</option>
+            <option value="1080">1080p</option>
+        </select>
+
+        <label for="fps-select" style="margin-right: 10px;">Frame Rate:</label>
+        <select id="fps-select"
+            style="background: var(--bg-color); color: var(--neon-cyan); border: 1px solid var(--neon-cyan); padding: 5px;">
+            <option value="10">10 FPS</option>
+            <option value="15" selected>15 FPS</option>
+            <option value="30">30 FPS</option>
+        </select>
+    </div>
+
+    <div class="controls">
+        <button id="start-btn">INITIATE UPLINK</button>
+        <button id="stop-btn" disabled>TERMINATE UPLINK</button>
+    </div>
+
+    <!-- Automatically served by your Node.js Socket.IO server-->
+    <script src="/socket.io/socket.io.js"></script>
+
+    <!-- The main logic for screen capture and WebRTC -->
+    <script src="js/sender.js"></script>
+</body>
+
+</html>

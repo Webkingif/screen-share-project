@@ -1,0 +1,81 @@
+:root {
+    --bg-color: #050505;
+    --panel-bg: #111118;
+    --neon-cyan: #00f3ff;
+    --neon-red: #ff003c;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--neon-cyan);
+    font-family: 'Courier New', Courier, monospace;
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+h1 {
+    text-shadow: 0 0 10px var(--neon-cyan);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.panel {
+    background: var(--panel-bg);
+    border: 1px solid var(--neon-cyan);
+    box-shadow: 0 0 15px rgba(0, 243, 255, 0.2);
+    padding: 20px;
+    border-radius: 4px;
+    width: 100%;
+    max-width: 600px;
+    margin-bottom: 20px;
+}
+
+a {
+    color: var(--neon-cyan);
+}
+
+button {
+    background: transparent;
+    color: var(--neon-cyan);
+    border: 1px solid var(--neon-cyan);
+    padding: 12px 20px;
+    font-family: inherit;
+    font-weight: bold;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+    margin-right: 10px;
+}
+
+button:hover:not(:disabled) {
+    background: var(--neon-cyan);
+    color: var(--bg-color);
+    box-shadow: 0 0 15px var(--neon-cyan);
+}
+
+button:disabled {
+    border-color: #555;
+    color: #555;
+    cursor: not-allowed;
+}
+
+#stop-btn:not(:disabled) {
+    border-color: var(--neon-red);
+    color: var(--neon-red);
+}
+
+#stop-btn:hover:not(:disabled) {
+    background: var(--neon-red);
+    color: var(--bg-color);
+    box-shadow: 0 0 15px var(--neon-red);
+}
+
+video {
+    width: 100%;
+    border: 1px solid var(--neon-cyan);
+    box-shadow: 0 0 20px rgba(0, 243, 255, 0.3);
+    background: #000;
+}

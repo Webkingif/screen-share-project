@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SYS_RECEIVER // WebRTC</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <h1>WINDOWS SCREEN RECEIVER</h1>
+
+    <div class="panel">
+        <p><strong>[ STATUS ]</strong> <span id="status">Waiting for uplink...</span></p>
+    </div>
+
+    <!-- The autoplay and playsinline attributes are critical for mobile browsers -->
+    <video id="remote-video" autoplay playsinline></video>
+
+    <div class="controls" style="margin-top: 20px;">
+        <button id="fullscreen-btn">FULL SCREEN</button>
+        <button id="disconnect-btn">DISCONNECT</button>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="js/receiver.js"></script>
+</body>
+
+</html>
