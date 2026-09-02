@@ -9,7 +9,9 @@ let peerConnection;
 
 // Configuration for local network WebRTC (no external STUN/TURN servers needed)[span_2](start_span)[span_2](end_span)
 const configuration = {
-    iceServers: []
+    iceServers: [
+        { urls: "stun:stun.l.google.com:19302" }
+    ]
 };
 
 // UI Elements

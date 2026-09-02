@@ -16,7 +16,9 @@ let localStream;
 
 // Configuration for local network WebRTC (no external STUN/TURN servers needed)
 const configuration = {
-    iceServers: []
+    iceServers: [
+        { urls: "stun:stun.l.google.com:19302" }
+    ]
 };
 
 // UI Elements
