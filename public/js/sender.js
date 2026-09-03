@@ -156,3 +156,56 @@ function stopScreenSharing() {
     resolutionSelect.disabled = false;
     fpsSelect.disabled = false;
 }
+
+
+
+
+
+
+// Clipboard Transfer Logic
+const clipboardInput = document.getElementById('clipboard-input');
+const sendTextBtn = document.getElementById('send-text-btn');
+const receivedText = document.getElementById('received-text');
+const copyBtn = document.getElementById('copy-btn'); // New Copy Button
+
+// Send text to the other device
+sendTextBtn.addEventListener('click', () => {
+    const text = clipboardInput.value;
+    if (text.trim() !== "") {
+        socket.emit('clipboard-text', text);
+        clipboardInput.value = ''; // Clear after sending
+    }
+});
+
+// Receive text from the other device
+socket.on('clipboard-text', (text) => {
+    receivedText.innerText = text;
+    receivedText.style.color = '#00ff00'; // Flash neon green when received
+
+    // Show the copy button now that we have data
+    copyBtn.style.display = 'inline-block';
+    copyBtn.innerText = 'COPY';
+});
+
+// Copy incoming text to the device's local clipboard
+copyBtn.addEventListener('click', async () => {
+    try {
+        const textToCopy = receivedText.innerText;
+        await navigator.clipboard.writeText(textToCopy);
+
+        // Provide visual feedback
+        copyBtn.innerText = 'COPIED!';
+        copyBtn.style.color = '#00ff00';
+        copyBtn.style.borderColor = '#00ff00';
+
+        // Reset button style after 2 seconds
+        setTimeout(() => {
+            copyBtn.innerText = 'COPY';
+            copyBtn.style.color = 'var(--neon-cyan)';
+            copyBtn.style.borderColor = 'var(--neon-cyan)';
+        }, 2000);
+    } catch (err) {
+        console.error('Failed to copy text: ', err);
+        copyBtn.innerText = 'ERROR';
+    }
+});

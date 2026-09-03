@@ -45,6 +45,22 @@
         <button id="stop-btn" disabled>TERMINATE UPLINK</button>
     </div>
 
+    <div class="panel" style="margin-bottom: 20px;">
+        <p><strong>[ CLIPBOARD_TRANSFER ]</strong></p>
+        <textarea id="clipboard-input" rows="3"
+            style="width: 95%; background: var(--bg-color); color: var(--neon-cyan); border: 1px solid var(--neon-cyan); padding: 10px; margin-bottom: 10px;"
+            placeholder="Paste text here..."></textarea>
+        <br>
+        <button id="send-text-btn">TRANSMIT TEXT</button>
+
+        <div style="margin-top: 15px; display: flex; align-items: center; gap: 10px;">
+            <strong>[ INCOMING_DATA ]:</strong>
+            <span id="received-text">None</span>
+            <!-- The new copy button -->
+            <button id="copy-btn" style="padding: 5px 10px; font-size: 0.8em; display: none;">COPY</button>
+        </div>
+    </div>
+
     <!-- Automatically served by your Node.js Socket.IO server-->
     <script src="/socket.io/socket.io.js"></script>
 

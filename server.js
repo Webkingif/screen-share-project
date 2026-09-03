@@ -50,6 +50,10 @@ io.on("connection", (socket) => {
         console.log(`User disconnected: ${socket.id}. Total devices: ${connectedDevices}`);
         io.emit("device-count", connectedDevices);
     });
+
+    socket.on("clipboard-text", (text) => {
+        socket.broadcast.emit("clipboard-text", text);
+    })
 });
 
 
