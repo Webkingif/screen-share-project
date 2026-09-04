@@ -22,7 +22,7 @@ const configuration = {
 };
 
 // UI Elements
-const startBtn = document.getElementById('start-btn');
+
 const stopBtn = document.getElementById('stop-btn');
 const statusText = document.getElementById('status');
 const deviceCountText = document.getElementById('device-count');
@@ -129,8 +129,7 @@ async function initiateScreenShare() {
         statusText.style.color = 'var(--neon-cyan)';
 
         // Update UI states
-        startBtn.disabled = true;
-        stopBtn.disabled = false;
+
         resolutionSelect.disabled = true;
         fpsSelect.disabled = true;
 
