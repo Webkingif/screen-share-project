@@ -1,13 +1,13 @@
 
 
 
-// Connect to the local signaling server[span_1](start_span)[span_1](end_span)
+// Connect to the local signaling server
 const socket = io();
 
 // WebRTC variables
 let peerConnection;
 
-// Configuration for local network WebRTC (no external STUN/TURN servers needed)[span_2](start_span)[span_2](end_span)
+// Configuration for local network WebRTC (no external STUN/TURN servers needed)
 const configuration = {
     iceServers: [
         { urls: "stun:stun.l.google.com:19302" }
@@ -31,6 +31,11 @@ function createPeerConnection() {
 
         statusText.innerText = 'UPLINK ACTIVE. RECEIVING TRANSMISSION...';
         statusText.style.color = '#00ff00'; // Neon green for active status
+        remoteVideo.play().catch(error => {
+            console.error("Mobile browser prevented autoplay", error);
+            statusText.innerText = "TAP TO PLAY VIDEO";
+            statusText.style.color = "var(--neon-red)";
+        })
     };
 
     // Send ICE candidates to the sender[span_5](start_span)[span_5](end_span)
@@ -162,3 +167,58 @@ copyBtn.addEventListener('click', async () => {
         copyBtn.innerText = 'ERROR';
     }
 });
+
+
+
+
+
+
+
+
+const pinPanel = document.getElementById('pin-panel');
+const streamContainer = document.getElementById('stream-container');
+const pinInput = document.getElementById('pin-input');
+const submitPinBtn = document.getElementById('submit-pin-btn');
+const pinFeedback = document.getElementById('pin-feedback');
+
+// Send PIN to server for verification
+submitPinBtn.addEventListener('click', () => {
+    const enteredPin = pinInput.value.trim();
+    if (enteredPin.length > 0) {
+        socket.emit('verify-pin', enteredPin);
+        pinFeedback.style.display = 'none';
+        submitPinBtn.innerText = 'VERIFYING...';
+        submitPinBtn.disabled = true;
+    }
+});
+
+// Server rejects the PIN
+socket.on('pin-rejected', () => {
+    pinFeedback.innerText = 'Invalid PIN. Try again.';
+    pinFeedback.style.display = 'block';
+    submitPinBtn.innerText = 'SUBMIT';
+    submitPinBtn.disabled = false;
+});
+
+// Laptop user clicked "Deny"
+socket.on('pairing-denied', () => {
+    pinFeedback.innerText = 'Connection denied by host.';
+    pinFeedback.style.color = 'var(--neon-red)';
+    pinFeedback.style.display = 'block';
+    submitPinBtn.innerText = 'SUBMIT';
+    submitPinBtn.disabled = false;
+});
+
+// Laptop user clicked "Allow"
+socket.on('pairing-approved', () => {
+    // Hide the login screen and show the video player interface
+    pinPanel.style.display = 'none';
+    streamContainer.style.display = 'block';
+
+    // The laptop will now automatically send the WebRTC offer to start the video
+});
+
+
+
+
+

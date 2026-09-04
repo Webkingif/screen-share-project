@@ -19,6 +19,8 @@ app.use(express.static(path.join(__dirname, "public")));
 
 // Track connected devices
 let connectedDevices = 0;
+let currentPin = null;
+let hostSocketId = null;
 
 // Handle websocket connections
 
@@ -54,6 +56,36 @@ io.on("connection", (socket) => {
     socket.on("clipboard-text", (text) => {
         socket.broadcast.emit("clipboard-text", text);
     })
+
+    // --- PIN Verification Logic ---
+
+
+    // 1. Laptop registers its PIN
+    socket.on('register-host', (pin) => {
+        currentPin = pin;
+        hostSocketId = socket.id;
+        console.log(`Host registered with PIN: ${pin}`);
+    });
+
+    // 2. Phone submits a PIN for verification
+    socket.on('verify-pin', (pin) => {
+        if (pin === currentPin && hostSocketId) {
+            // PIN is correct, ask laptop for approval
+            io.to(hostSocketId).emit('connection-request', socket.id);
+        } else {
+            // PIN is incorrect
+            socket.emit('pin-rejected');
+        }
+    });
+
+    // 3. Laptop responds with Allow or Deny
+    socket.on('host-response', (data) => {
+        if (data.approved) {
+            io.to(data.requesterId).emit('pairing-approved');
+        } else {
+            io.to(data.requesterId).emit('pairing-denied');
+        }
+    });
 });
 
 

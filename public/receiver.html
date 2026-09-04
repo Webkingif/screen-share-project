@@ -10,13 +10,32 @@
 
 <body>
     <h1>WINDOWS SCREEN RECEIVER</h1>
-
-    <div class="panel">
-        <p><strong>[ STATUS ]</strong> <span id="status">Waiting for uplink...</span></p>
+    <!-- New Login Panel -->
+    <div id="pin-panel" class="panel">
+        <p><strong>[ ENTER PIN ]</strong></p>
+        <input type="number" id="pin-input"
+            style="background: var(--bg-color); color: var(--neon-cyan); border: 1px solid var(--neon-cyan); padding: 10px; font-size: 1.2em; width: 80%; margin-bottom: 15px;"
+            placeholder="6-digit code">
+        <br>
+        <button id="submit-pin-btn">SUBMIT</button>
+        <p id="pin-feedback" style="color: var(--neon-red); display: none;">Invalid PIN. Try again.</p>
     </div>
 
+    <!-- Wrap the existing elements in this hidden div -->
+    <div id="stream-container" style="display: none;">
+        <div class="panel">
+            <p><strong>[ STATUS ]</strong> <span id="status">Waiting for uplink...</span></p>
+        </div>
+        <video id="remote-video" autoplay playsinline muted></video>
+        <!-- ... (Keep your existing controls and clipboard panel here) ... -->
+    </div>
+
+    <!-- <div class="panel">
+        <p><strong>[ STATUS ]</strong> <span id="status">Waiting for uplink...</span></p>
+    </div> -->
+
     <!-- The autoplay and playsinline attributes are critical for mobile browsers -->
-    <video id="remote-video" autoplay playsinline muted></video>
+    <!-- <video id="remote-video" autoplay playsinline muted></video> -->
 
     <div class="controls" style="margin-top: 20px;">
         <button id="fullscreen-btn">FULL SCREEN</button>

@@ -12,6 +12,8 @@
     <h1>LOCAL SCREEN SHARING</h1>
 
     <div class="panel">
+        <p><strong>[ PAIRING_PIN ]</strong> <span id="pin-display"
+                style="font-size: 1.5em; color: var(--neon-cyan);">Generating...</span></p>
         <p><strong>[ STATUS ]</strong> <span id="status">Ready</span></p>
         <p><strong>[ LAPTOP_IP ]</strong> <span id="laptop-ip">Detecting...</span></p>
         <p><strong>[ RECEIVER_URL ]</strong> <a href="#" id="receiver-url" target="_blank">Detecting...</a></p>
@@ -59,6 +61,16 @@
             <!-- The new copy button -->
             <button id="copy-btn"
                 style="padding: 5px 10px; font-size: 0.8em; display: none; align-self: flex-start;">COPY</button>
+        </div>
+    </div>
+    <div id="approval-modal" class="panel"
+        style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: var(--bg-color); z-index: 100; text-align: center; box-shadow: 0 0 30px var(--neon-cyan);">
+        <h2>INCOMING CONNECTION</h2>
+        <p>An Android device is attempting to connect.</p>
+        <p><strong>Allow this phone?</strong></p>
+        <div style="margin-top: 20px;">
+            <button id="allow-btn" style="color: #00ff00; border-color: #00ff00;">ALLOW</button>
+            <button id="deny-btn" style="color: var(--neon-red); border-color: var(--neon-red);">DENY</button>
         </div>
     </div>
 

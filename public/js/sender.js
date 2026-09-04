@@ -44,8 +44,60 @@ socket.on('device-count', (count) => {
     deviceCountText.innerText = receivers;
 });
 
+
+
+
+const pinDisplay = document.getElementById('pin-display');
+const approvalModal = document.getElementById('approval-modal');
+const allowBtn = document.getElementById('allow-btn');
+const denyBtn = document.getElementById('deny-btn');
+
+let currentRequester = null;
+
+// Generate a random 6-digit PIN on load and register it with the server[span_3](start_span)[span_3](end_span)
+const connectionPin = Math.floor(100000 + Math.random() * 900000).toString();
+pinDisplay.innerText = connectionPin;
+socket.emit('register-host', connectionPin);
+
+// Handle incoming request from the Android phone
+socket.on('connection-request', (requesterId) => {
+    currentRequester = requesterId;
+    approvalModal.style.display = 'block'; // Show the Allow/Deny modal
+});
+
+// User clicks Deny
+denyBtn.addEventListener('click', () => {
+    approvalModal.style.display = 'none';
+    socket.emit('host-response', { requesterId: currentRequester, approved: false });
+    currentRequester = null;
+});
+
+// User clicks Allow - This now replaces the old "INITIATE UPLINK" button click
+allowBtn.addEventListener('click', async () => {
+    approvalModal.style.display = 'none';
+    socket.emit('host-response', { requesterId: currentRequester, approved: true });
+
+    // Start the WebRTC screen sharing process immediately after approval[span_4](start_span)[span_4](end_span)
+    await initiateScreenShare();
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // Start Screen Sharing Flow
-startBtn.addEventListener('click', async () => {
+async function initiateScreenShare() {
     try {
         // Read user-selected configuration
         const selectedRes = resolutionSelect.value;
@@ -114,7 +166,7 @@ startBtn.addEventListener('click', async () => {
         statusText.innerText = 'Uplink failed: Permission denied or error.';
         statusText.style.color = 'var(--neon-red)';
     }
-});
+};
 
 // Handle incoming WebRTC Answer from the Android receiver
 socket.on('answer', async (answer) => {
