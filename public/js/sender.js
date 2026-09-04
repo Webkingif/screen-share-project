@@ -22,7 +22,6 @@ const configuration = {
 };
 
 // UI Elements
-
 const stopBtn = document.getElementById('stop-btn');
 const statusText = document.getElementById('status');
 const deviceCountText = document.getElementById('device-count');
@@ -130,6 +129,7 @@ async function initiateScreenShare() {
 
         // Update UI states
 
+        stopBtn.disabled = false;
         resolutionSelect.disabled = true;
         fpsSelect.disabled = true;
 
@@ -202,7 +202,6 @@ function stopScreenSharing() {
     // Reset UI states
     statusText.innerText = 'Uplink terminated. Ready.';
     statusText.style.color = 'var(--neon-cyan)';
-    startBtn.disabled = false;
     stopBtn.disabled = true;
     resolutionSelect.disabled = false;
     fpsSelect.disabled = false;
